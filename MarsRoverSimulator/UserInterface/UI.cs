@@ -72,7 +72,7 @@ namespace MarsRoverSimulator.UserInterface
 			// In this case, I prefer to correct the user. I would discuss this with the client and let them make the call.
 
 
-		    if (d.Length > 0)
+		    if (d.Length > 1)
 			    return Dir.Fail;
 
 		    switch (dir[0])
@@ -97,7 +97,9 @@ namespace MarsRoverSimulator.UserInterface
 	    {
 			Console.WriteLine("There are no guard rails on Mars. Are you sure you want to drive off the cliff?  (Yes/No)");
 			var response = Console.ReadLine();
-			return  response?.Contains("Yes", StringComparison.InvariantCultureIgnoreCase) ?? false;
+
+			// In production code there are lots of variations of yes we should test here - Yno, would return true. That's ok, it's a kata :)
+			return response?.Contains("n", StringComparison.InvariantCultureIgnoreCase) ?? false;
 
 
 	    }
@@ -106,7 +108,9 @@ namespace MarsRoverSimulator.UserInterface
 	    {
 		    Console.WriteLine("This path will result in a rover crash and it takes forever for AAA to come validate an insurance claim on Mars. Are you sure you want to use this path? (Yes/No)");
 		    var response = Console.ReadLine();
-		    return response?.Contains("Yes", StringComparison.InvariantCultureIgnoreCase) ?? false;
+
+			// In production code there are lots of variations of yes we should test here - Yno, would return true. That's ok, it's a kata :)
+		    return response?.Contains("n", StringComparison.InvariantCultureIgnoreCase) ?? false;
 		}
 
 

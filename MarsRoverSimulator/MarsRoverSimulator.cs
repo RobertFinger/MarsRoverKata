@@ -19,14 +19,13 @@ namespace MarsRoverSimulator
 		    // I know, it's a little silly to have a 'builder' for 2 objects of the same type - but for most real projects we would want a builder so you get one :)  
 			var rb = new RoverBuilder();
 			var r1Loc = UI.SetRoverLocation(1);
-			var r2Loc = UI.SetRoverLocation(1);
+			var r2Loc = UI.SetRoverLocation(2);
 
 			//We don't allow rovers to occupy the same space.  Mars is big, rovers are expensive.  The builder will test to see if the starting locations are in the same spot.
 			var rover1 = rb.AddRover(r1Loc, map);
-			var rover2 = rb.AddRover(r2Loc, map);
-			
-			
 			map.SetRoverPosition(rover1);
+
+			var rover2 = rb.AddRover(r2Loc, map);
 			map.SetRoverPosition(rover2);
 	    }
     }
