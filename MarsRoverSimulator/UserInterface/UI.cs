@@ -4,19 +4,24 @@ using System;
 
 namespace MarsRoverSimulator.UserInterface
 {
-	public static class UI
+	public class UI 
     {
+		public IInputOutputManager IO;
 
-	    public static void WelcomeUser()
+		public UI(IInputOutputManager io)
+		{
+			IO = io;
+		}
+		
+		public void WelcomeUser()
 	    {
-			Console.WriteLine("Hello and welcome to the NASA mars rover simulator.");
+		    IO.SendTextToUser("Hello and welcome to the NASA mars rover simulator.");
 	    }
 
-	    public static Tuple<int,int> GetMapSize()
+	    public Tuple<int,int> GetMapSize()
 	    {
-			Console.WriteLine("Enter Graph Upper Right Coordinate (X Y)");
-			var response = Console.ReadLine();
-
+		    var response = IO.GetUserResponse("Enter Graph Upper Right Coordinate (X Y)");
+			
 			// since we aren't following the most common way to input x y, we can predict they may use a comma.  Let's not make them retype it, we know what they meant.
 			response = response?.Replace(',', ' '); 
 			
@@ -26,18 +31,17 @@ namespace MarsRoverSimulator.UserInterface
 
 			if (!s1 || !s2)
 			{
-				Console.WriteLine($"Invalid parameters.  Please use this format (X Y Dir)");
+				IO.SendTextToUser($"Invalid parameters.  Please use this format (X Y Dir)");
 				GetMapSize();
 			}
 
 			return new Tuple<int, int>(x,y);
 		}
 
-	    public static Position SetRoverLocation(int roverNumber)
+	    public Position SetRoverLocation(int roverNumber)
 	    {
-		    Console.WriteLine($"Enter the starting position for rover #{roverNumber} (X Y Dir)");
-		    var response = Console.ReadLine();
-
+		    var response = IO.GetUserResponse($"Enter the starting position for rover #{roverNumber} (X Y Dir)");
+		
 		    // since we aren't following the most common way to input x y dir, we can predict they may use a comma.  Let's not make them retype it, we know what they meant.
 		    
 		    response = response?.Replace(',', ' ');
@@ -51,7 +55,7 @@ namespace MarsRoverSimulator.UserInterface
 
 			if (!s1 || !s2 || s3 == Dir.Fail)
 			{
-				Console.WriteLine($"Invalid parameters.  Please use this format (X Y Dir)");
+				IO.SendTextToUser($"Invalid parameters.  Please use this format (X Y Dir)");
 				SetRoverLocation(roverNumber);
 			}
 
@@ -63,7 +67,7 @@ namespace MarsRoverSimulator.UserInterface
 
 	    }
 
-	    private static Dir GetDirFromChar(string dir)
+	    private Dir GetDirFromChar(string dir)
 	    {
 		    var d = dir.ToLower().ToCharArray();
 		    
@@ -93,24 +97,21 @@ namespace MarsRoverSimulator.UserInterface
 	    }
 
 
-	    public static bool DriveOffCliff()
+	    public bool DriveOffCliff()
 	    {
-			Console.WriteLine("There are no guard rails on Mars. Are you sure you want to drive off the cliff?  (Yes/No)");
-			var response = Console.ReadLine();
-
+		    var response = IO.GetUserResponse("There are no guard rails on Mars and this path will cause the rover to drive off a cliff.  Would you like to change this path?  (Y/N)");
+			
 			// In production code there are lots of variations of yes we should test here - Yno, would return true. That's ok, it's a kata :)
-			return response?.Contains("n", StringComparison.InvariantCultureIgnoreCase) ?? false;
+			return response?.Contains("y", StringComparison.InvariantCultureIgnoreCase) ?? false;
 
 
 	    }
 
-	    public static bool CrashIntoRover()
+	    public bool CrashIntoRover()
 	    {
-		    Console.WriteLine("This path will result in a rover crash and it takes forever for AAA to come validate an insurance claim on Mars. Are you sure you want to use this path? (Yes/No)");
-		    var response = Console.ReadLine();
-
+		    var response = IO.GetUserResponse("This path will result in a rover crash and it takes forever for AAA to come validate an insurance claim on Mars. Would you like to change this path? (Y/N)");
 			// In production code there are lots of variations of yes we should test here - Yno, would return true. That's ok, it's a kata :)
-		    return response?.Contains("n", StringComparison.InvariantCultureIgnoreCase) ?? false;
+		    return response?.Contains("y", StringComparison.InvariantCultureIgnoreCase) ?? false;
 		}
 
 

@@ -1,6 +1,7 @@
 ﻿using MarsRoverSimulator.InterfaceAndEnums;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace MarsRoverSimulator.Rover
 {
@@ -14,7 +15,7 @@ namespace MarsRoverSimulator.Rover
 		}
 
 		public int SerialNumber { get; set; }
-		public Queue<Position> Movement { get; set; }
+		public Queue<Controls> Movement { get; set; }
 		private bool CanMoveToPosition(Position pos)
 		{
 			throw new NotImplementedException();
@@ -22,10 +23,32 @@ namespace MarsRoverSimulator.Rover
 
 		public bool SetMoveCommands(string commands)
 		{
-			throw new NotImplementedException();
+
+			var com = commands.ToLower(CultureInfo.InvariantCulture).ToCharArray();
+
+			foreach (var c in com)
+			{
+				switch (c)
+				{
+					case 'l':
+						Movement.Enqueue(Controls.Left);
+						break;
+					case 'r':
+						Movement.Enqueue(Controls.Right);
+						break;
+					case 'm':
+						Movement.Enqueue(Controls.Forward);
+						break;
+					default:
+						return false;
+
+				}
+				
+			}
+
+			return true;
+
 		}
-
-
 
 
 		public Position MoveRover()

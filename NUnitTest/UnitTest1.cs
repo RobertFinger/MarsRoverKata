@@ -1,4 +1,9 @@
+using System;
+using MarsRoverSimulator.InterfaceAndEnums;
+using MarsRoverSimulator.Rover;
+using MarsRoverSimulator.UserInterface;
 using NUnit.Framework;
+using NUnitTest.Mock;
 
 namespace NUnitTest
 {
@@ -10,9 +15,20 @@ namespace NUnitTest
 		}
 
 		[Test]
-		public void Test1()
+		public void CanSetMapSize()
 		{
-			Assert.Pass();
+			var io = new MockUserInputOutputManager();
+			var ui = new UI(io);
+			
+			// to see the string input, look in the MockUserInputManager.cs file.
+
+
+			io.TestNumber = 1;
+			Assert.AreEqual(ui.GetMapSize(), new Tuple<int, int>(0, 0));
+
+			io.TestNumber = 2; 
+			Assert.AreEqual(ui.GetMapSize(), new Tuple<int, int>(5, 5));
+
 		}
 	}
 }

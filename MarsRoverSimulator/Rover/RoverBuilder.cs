@@ -4,19 +4,25 @@ using MarsRoverSimulator.UserInterface;
 namespace MarsRoverSimulator.Rover
 {
 	public class RoverBuilder : IRoverBuilder
-    {
-		public int MaxSerialNumber { get; set; }
-	    public IRover AddRover(Position location, IMap map)
+	{
+		private readonly UI _ui;
+	    public RoverBuilder(UI ui)
+	    {
+		    _ui = ui;
+	    }
+		public void AddRover(Position location, IMap map, int serial)
 	    {
 		    
-		    if (!map.IsLocationSafe(location))
+		    if (!map.IsLocationSafe(location, serial))
 		    {
-			    if (!UI.CrashIntoRover())
-				    location = UI.SetRoverLocation(MaxSerialNumber);
+			    var resetDangerousLocation = _ui.CrashIntoRover();
+			    
+			    if (resetDangerousLocation)
+				    location = _ui.SetRoverLocation(serial);
+
 		    }
-
-
-			return new MarsVehicle(location) {SerialNumber = MaxSerialNumber++, CurrentPosition = location};
+			var rv = new MarsVehicle(location) {SerialNumber = serial, CurrentPosition = location};
+			map.SetRoverPosition(rv);
 	    }
     }
 }
