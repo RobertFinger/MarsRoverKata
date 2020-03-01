@@ -41,7 +41,7 @@ namespace NUnitTest
 		public void MoveRover2()
 		{
 			var map = new Map(5, 5);
-			var p2 = new Position() { X = 1, Y = 3, Facing = Dir.North };
+			var p2 = new Position() { X = 3, Y = 3, Facing = Dir.East };
 			var rover2 = new MarsVehicle(p2);
 			var movement2 = "MMRMMRMRRM";
 

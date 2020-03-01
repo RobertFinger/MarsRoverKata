@@ -86,11 +86,11 @@ namespace MarsRoverSimulator.Rover
 								map.IsLocationSafe(CurrentPosition, SerialNumber);
 								break;
 							case Dir.East:
-								CurrentPosition.X--;
+								CurrentPosition.X++;
 								map.IsLocationSafe(CurrentPosition, SerialNumber);
 								break;
 							case Dir.West:
-								CurrentPosition.X++;
+								CurrentPosition.X--;
 								map.IsLocationSafe(CurrentPosition, SerialNumber);
 								break;
 						}
