@@ -52,25 +52,17 @@ namespace MarsRoverSimulator.Rover
 				{
 					case Controls.Right:
 						if ((int) CurrentPosition.Facing < 270)
-						{
 							CurrentPosition.Facing += 90;
-						}
 						else
-						{
 							CurrentPosition.Facing = 0;
-						}
 
 						break;
 
 					case Controls.Left:
 						if ((int) CurrentPosition.Facing > 0)
-						{
 							CurrentPosition.Facing -= 90;
-						}
 						else
-						{
 							CurrentPosition.Facing = (Dir) 270;
-						}
 
 						break;
 

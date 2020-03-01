@@ -5,7 +5,7 @@ namespace NUnitTest.Mock
 	public class MockUserInputOutputManager : IInputOutputManager
 	{
 		public int TestNumber { get; set; }
-		
+
 		public string GetUserResponse(string input)
 		{
 			switch (input)
@@ -15,6 +15,11 @@ namespace NUnitTest.Mock
 			}
 
 			return string.Empty;
+		}
+
+
+		public void SendTextToUser(string input)
+		{
 		}
 
 		private string SetMapCoords()
@@ -33,15 +38,7 @@ namespace NUnitTest.Mock
 					return "1,a";
 				default:
 					return "5 5";
-
-
 			}
-		}
-
-
-		public void SendTextToUser(string input)
-		{
-			return;
 		}
 	}
 }

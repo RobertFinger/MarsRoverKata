@@ -7,9 +7,8 @@ namespace MarsRoverSimulator.InterfaceAndEnums
 	{
 		public int SerialNumber { get; set; }
 		public Queue<Controls> Movement { get; set; }
-		public void ApplyMovementCommands(string commands);
 		public Position CurrentPosition { get; set; }
+		public void ApplyMovementCommands(string commands);
 		public bool MoveRover(IMap map);
-
 	}
 }
