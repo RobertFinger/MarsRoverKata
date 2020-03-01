@@ -97,21 +97,14 @@ namespace MarsRoverSimulator.UserInterface
 
 		    var direction = dir[0];
 
-			switch (direction)
+		    return direction switch
 		    {
-				case 'n':
-					return Dir.North;				
-				case 's':
-					return Dir.South;				
-				case 'e':
-					return Dir.East;				
-				case 'w':
-					return Dir.West;
-				default:
-					return Dir.Fail;
-
-		    }
-		    
+			    'n' => Dir.North,
+			    's' => Dir.South,
+			    'e' => Dir.East,
+			    'w' => Dir.West,
+			    _ => Dir.Fail
+		    };
 	    }
 
 

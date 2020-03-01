@@ -59,35 +59,27 @@ namespace MarsRoverSimulator.Rover
 							this.CurrentPosition.Facing+=90;
 						else
 							this.CurrentPosition.Facing = 0;
-
-						Console.WriteLine($" facing: {this.CurrentPosition.Facing}");
 						break;
 					case Controls.Left:
 						if ((int)this.CurrentPosition.Facing > 0)
 							this.CurrentPosition.Facing -= 90;
 						else
 							this.CurrentPosition.Facing = (Dir) 270;
-						
-						Console.WriteLine($" facing: {this.CurrentPosition.Facing}");
 						break;
 					case Controls.Forward:
 						switch (this.CurrentPosition.Facing)
 						{
 							case Dir.North:
 								this.CurrentPosition.Y++;
-								Console.WriteLine($" y: {this.CurrentPosition.Y}");
 								break;
 							case Dir.South:
 								this.CurrentPosition.Y--;
-								Console.WriteLine($" y: {this.CurrentPosition.Y}");
 								break;
 							case Dir.East:
 								this.CurrentPosition.X++;
-								Console.WriteLine($" x: {this.CurrentPosition.Y}");
 								break;
 							case Dir.West:
 								this.CurrentPosition.X--;
-								Console.WriteLine($" x: {this.CurrentPosition.Y}");
 								break;
 						}
 
