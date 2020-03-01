@@ -45,8 +45,6 @@ namespace MarsRoverSimulator.Rover
 
 		public bool MoveRover(IMap map)
 		{
-			Console.WriteLine($"Facing:{CurrentPosition.Facing}");
-
 			foreach (var move in Movement)
 				switch (move)
 				{
