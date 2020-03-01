@@ -1,5 +1,5 @@
-﻿using MarsRoverSimulator.InterfaceAndEnums;
-using System;
+﻿using System;
+using MarsRoverSimulator.InterfaceAndEnums;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -15,13 +15,9 @@ namespace MarsRoverSimulator.Rover
 		}
 
 		public int SerialNumber { get; set; }
-		public Queue<Controls> Movement { get; set; }
-		private bool CanMoveToPosition(Position pos)
-		{
-			throw new NotImplementedException();
-		}
+		public Queue<Controls> Movement { get; set; } = new Queue<Controls>();
 
-		public bool SetMoveCommands(string commands)
+		public bool ApplyMovementCommands(string commands)
 		{
 
 			var com = commands.ToLower(CultureInfo.InvariantCulture).ToCharArray();
@@ -31,13 +27,13 @@ namespace MarsRoverSimulator.Rover
 				switch (c)
 				{
 					case 'l':
-						Movement.Enqueue(Controls.Left);
+						this.Movement.Enqueue(Controls.Left);
 						break;
 					case 'r':
-						Movement.Enqueue(Controls.Right);
+						this.Movement.Enqueue(Controls.Right);
 						break;
 					case 'm':
-						Movement.Enqueue(Controls.Forward);
+						this.Movement.Enqueue(Controls.Forward);
 						break;
 					default:
 						return false;
@@ -51,9 +47,57 @@ namespace MarsRoverSimulator.Rover
 		}
 
 
-		public Position MoveRover()
+		public bool MoveRover(IMap map)
 		{
-			throw new NotImplementedException();
+
+			foreach (var move in this.Movement)
+			{
+				switch (move)
+				{
+					case Controls.Right:
+						if((int)this.CurrentPosition.Facing < 270)
+							this.CurrentPosition.Facing+=90;
+						else
+							this.CurrentPosition.Facing = 0;
+
+						Console.WriteLine($" facing: {this.CurrentPosition.Facing}");
+						break;
+					case Controls.Left:
+						if ((int)this.CurrentPosition.Facing > 0)
+							this.CurrentPosition.Facing -= 90;
+						else
+							this.CurrentPosition.Facing = (Dir) 270;
+						
+						Console.WriteLine($" facing: {this.CurrentPosition.Facing}");
+						break;
+					case Controls.Forward:
+						switch (this.CurrentPosition.Facing)
+						{
+							case Dir.North:
+								this.CurrentPosition.Y++;
+								Console.WriteLine($" y: {this.CurrentPosition.Y}");
+								break;
+							case Dir.South:
+								this.CurrentPosition.Y--;
+								Console.WriteLine($" y: {this.CurrentPosition.Y}");
+								break;
+							case Dir.East:
+								this.CurrentPosition.X++;
+								Console.WriteLine($" x: {this.CurrentPosition.Y}");
+								break;
+							case Dir.West:
+								this.CurrentPosition.X--;
+								Console.WriteLine($" x: {this.CurrentPosition.Y}");
+								break;
+						}
+
+						break;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
+
+			return true;
 		}
 	}
 }

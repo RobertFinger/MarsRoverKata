@@ -17,18 +17,25 @@ namespace MarsRoverSimulator
 			// So I would rather get the input and validate in the ui class.
 			var m = ui.GetMapSize();
 			var map = new Map(m.Item1, m.Item2);
-
+		    var rb = new RoverBuilder(ui);
 			const int r1Serial = 1;
 			const int r2Serial = 2;
 
 		    // I know, it's a little silly to have a 'builder' for 2 objects of the same type - but for most real projects we would want a builder so you get one :)  
-		    var rb = new RoverBuilder(ui);
-			var r1Loc = ui.SetRoverLocation(r1Serial);
-			var r2Loc = ui.SetRoverLocation(r2Serial);
 
-			//We don't allow rovers to occupy the same space.  Mars is big, rovers are expensive.  The builder will test to see if the starting locations are in the same spot.
-			rb.AddRover(r1Loc, map, r1Serial);
-			rb.AddRover(r2Loc, map, r2Serial);
+			//var r1Loc = ui.SetRoverLocation(r1Serial);
+			//var rover1 = rb.AddRover(r1Loc, map, r1Serial);
+			//var commands1 = ui.SetMovementPlan(rover1.SerialNumber);
+			//rover1.ApplyMovementCommands(commands1);
+			//rover1.MoveRover(map);
+			//io.SendTextToUser($"Rover 1 output {rover1.CurrentPosition.X} {rover1.CurrentPosition.Y} {rover1.CurrentPosition.Facing.ToString()}");
+
+			var r2Loc = ui.SetRoverLocation(r2Serial);			
+			var rover2 = rb.AddRover(r2Loc, map, r2Serial);
+			var commands2 = ui.SetMovementPlan(rover2.SerialNumber);
+			rover2.ApplyMovementCommands(commands2);
+			rover2.MoveRover(map);
+			io.SendTextToUser($"Rover 2 output {rover2.CurrentPosition.X} {rover2.CurrentPosition.Y} {rover2.CurrentPosition.Facing.ToString()}");
 
 	    }
     }

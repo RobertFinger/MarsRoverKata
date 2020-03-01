@@ -1,6 +1,7 @@
 ﻿using MarsRoverSimulator.InterfaceAndEnums;
 using MarsRoverSimulator.Rover;
 using System;
+using System.Text.RegularExpressions;
 
 namespace MarsRoverSimulator.UserInterface
 {
@@ -38,9 +39,24 @@ namespace MarsRoverSimulator.UserInterface
 			return new Tuple<int, int>(x,y);
 		}
 
-	    public Position SetRoverLocation(int roverNumber)
+	    public string SetMovementPlan(int serial)
 	    {
-		    var response = IO.GetUserResponse($"Enter the starting position for rover #{roverNumber} (X Y Dir)");
+			var response = IO.GetUserResponse($"Enter the movement plan for rover #{serial} (L: left  R:right M:move -  for example LMLMLMLMM )");
+
+			Regex strPattern = new Regex("^[lrmLRM]");
+
+			if (!strPattern.IsMatch(response))
+			{
+				IO.SendTextToUser($"Invalid parameters.  Please use this format (L: left  R:right M:move -  for example LMLMLMLMM )");
+				SetMovementPlan(serial);
+			}
+
+			return response;
+	    }
+
+	    public Position SetRoverLocation(int serial)
+	    {
+		    var response = IO.GetUserResponse($"Enter the starting position for rover #{serial} (X Y Dir)");
 		
 		    // since we aren't following the most common way to input x y dir, we can predict they may use a comma.  Let's not make them retype it, we know what they meant.
 		    
@@ -56,7 +72,7 @@ namespace MarsRoverSimulator.UserInterface
 			if (!s1 || !s2 || s3 == Dir.Fail)
 			{
 				IO.SendTextToUser($"Invalid parameters.  Please use this format (X Y Dir)");
-				SetRoverLocation(roverNumber);
+				SetRoverLocation(serial);
 			}
 
 			rv.X = x;
@@ -76,19 +92,21 @@ namespace MarsRoverSimulator.UserInterface
 			// In this case, I prefer to correct the user. I would discuss this with the client and let them make the call.
 
 
-		    if (d.Length > 1)
+		    if (d.Length > 1 || d.Length < 1)
 			    return Dir.Fail;
 
-		    switch (dir[0])
+		    var direction = dir[0];
+
+			switch (direction)
 		    {
 				case 'n':
 					return Dir.North;				
 				case 's':
-					return Dir.North;				
+					return Dir.South;				
 				case 'e':
-					return Dir.North;				
+					return Dir.East;				
 				case 'w':
-					return Dir.North;
+					return Dir.West;
 				default:
 					return Dir.Fail;
 

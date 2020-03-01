@@ -2,10 +2,10 @@
 {
 	public enum Dir
 	{
-		North,
-		South,
-		East,
-		West,
-		Fail
+		North = 0,
+		East = 90,
+		South =180,
+		West = 270,
+		Fail =-1
 	}
 }

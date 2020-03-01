@@ -10,7 +10,7 @@ namespace MarsRoverSimulator.Rover
 	    {
 		    _ui = ui;
 	    }
-		public void AddRover(Position location, IMap map, int serial)
+		public IRover AddRover(Position location, IMap map, int serial)
 	    {
 		    
 		    if (!map.IsLocationSafe(location, serial))
@@ -23,6 +23,8 @@ namespace MarsRoverSimulator.Rover
 		    }
 			var rv = new MarsVehicle(location) {SerialNumber = serial, CurrentPosition = location};
 			map.SetRoverPosition(rv);
+
+			return rv;
 	    }
     }
 }
