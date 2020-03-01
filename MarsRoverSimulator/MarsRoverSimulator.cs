@@ -31,6 +31,11 @@ namespace MarsRoverSimulator
 			rover1.MoveRover(map);
 			io.SendTextToUser($"Rover 1 output {rover1.CurrentPosition.X} {rover1.CurrentPosition.Y} {rover1.CurrentPosition.Facing.ToString()}");
 
+			// the first rover may have muted these warnings, so lets unmute them. In production code we may prefer each rover to have it's on mute warnings settings, but that's a design call.
+			// Here I decided to let the map handle all environmental things like rovers colliding or driving off the edge. 
+			map.MuteCliffWarning(false);
+			map.MuteCollisionWarning(false);
+
 			var r2Loc = ui.SetRoverLocation(r2Serial);			
 			var rover2 = rb.AddRover(r2Loc, map, r2Serial);
 			var commands2 = ui.SetMovementPlan(rover2.SerialNumber);

@@ -6,8 +6,6 @@ namespace NUnitTest.Mock
 	{
 		public int TestNumber { get; set; }
 		
-
-
 		public string GetUserResponse(string input)
 		{
 			switch (input)
