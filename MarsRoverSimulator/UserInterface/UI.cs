@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 using MarsRoverSimulator.InterfaceAndEnums;
 using MarsRoverSimulator.Rover;
@@ -79,7 +78,7 @@ namespace MarsRoverSimulator.UserInterface
 					SetRoverLocation(serial);
 				}
 
-				
+
 				rv.X = x;
 				rv.Y = y;
 				rv.Facing = s3;
@@ -133,7 +132,7 @@ namespace MarsRoverSimulator.UserInterface
 		public bool PromptToMuteDriveOffCliff()
 		{
 			var response = IO.GetUserResponse("Would you like to mute the warning about driving off a cliff? (Y/N)");
-			// In production code there are lots of variations of yes we should test here - Yno, would return true. That's ok, it's a kata :)
+			// In production code there are lots of variations of yes we should test here - Yno, would return true and literally anything but 'y' will return false. That's ok, it's a kata :)
 			return response?.Contains("y", StringComparison.InvariantCultureIgnoreCase) ?? false;
 		}
 
@@ -144,15 +143,6 @@ namespace MarsRoverSimulator.UserInterface
 				IO.GetUserResponse(
 					"This path will cause you to crash into another rover.  It's a real pain to get AAA to come to mars for an insurance claim.  Would you like to change this path?  (Y/N)");
 
-			// In production code there are lots of variations of yes we should test here - Yno, would return true. That's ok, it's a kata :)
-			return response?.Contains("y", StringComparison.InvariantCultureIgnoreCase) ?? false;
-		}
-
-		public bool PromptToMuteCrashIntoRover()
-		{
-			var response =
-				IO.GetUserResponse("Would you like to mute the warning about colliding with another rover? (Y/N)");
-			// In production code there are lots of variations of yes we should test here - Yno, would return true. That's ok, it's a kata :)
 			return response?.Contains("y", StringComparison.InvariantCultureIgnoreCase) ?? false;
 		}
 	}

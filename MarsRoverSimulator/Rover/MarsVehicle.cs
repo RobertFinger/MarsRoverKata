@@ -20,7 +20,8 @@ namespace MarsRoverSimulator.Rover
 		public void ApplyMovementCommands(string commands)
 		{
 			//this is where we convert the movement string into a movement queue.
-			//the queue allows us to test each position of the movement for collision or driving off the edge.
+			//the queue allows us to test each position of the movement for collision or driving off the edge and if we wanted
+			//to build the functionality, we could undo the last command and add others.
 			//we could do all of the logic off of string manipulation, but that's pretty fragile.
 
 			Movement = new Queue<Controls>();
