@@ -25,7 +25,7 @@ namespace MarsRoverSimulator
 
 			MoveConditions success;
 
-			// if the rover hits something or drives off a ledge, redo it.
+			// if the rover hits something or drives off a ledge, make the user redo it.
 			do
 			{
 				success = CommandRover(1, map);
@@ -45,10 +45,8 @@ namespace MarsRoverSimulator
 		{
 			// I know, it's a little silly to have a 'builder' for 2 objects of the same type - but for most real projects we would want a builder so you get one :)  
 			var rb = new RoverBuilder(_ui);
-			
-			var Loc = _ui.SetRoverLocation(serial);
-			
-			var rover = rb.AddRover(Loc, map, serial);
+			var loc = _ui.SetRoverLocation(serial);
+			var rover = rb.AddRover(loc, map, serial);
 			var commands = _ui.SetMovementPlan(rover.SerialNumber);
 			rover.ApplyMovementCommands(commands);
 			var move = rover.MoveRover(map);
