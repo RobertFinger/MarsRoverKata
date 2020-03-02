@@ -42,7 +42,7 @@ namespace MarsRoverSimulator.Rover
 
 		public MoveConditions IsLocationSafe(Position pos, int serial)
 		{
-			//Since this is a simulator, they will want us to warn them if their planned route is safe.
+			//Since this is a simulator, they will want us to warn them if their planned route is not safe.
 			//the two conditions we can test for is "did we drive off the cliff" and "did we crash into another rover"
 			// note: the reason we use a queue for movement in MarsVehicle.cs is so we can check for collision or cliff edges every step of the way.
 			// that way you can't park a rover in the path of another rover without getting a feedback.
