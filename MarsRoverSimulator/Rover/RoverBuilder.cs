@@ -14,12 +14,16 @@ namespace MarsRoverSimulator.Rover
 
 		public IRover AddRover(Position location, IMap map, int serial)
 		{
-			if ( map.IsLocationSafe(location, serial) != MoveConditions.Safe)
-			{
-				var resetDangerousLocation = _ui.CrashIntoRover();
+			var loc = map.IsLocationSafe(location, serial);
 
-				if (resetDangerousLocation)
-					location = _ui.SetRoverLocation(serial);
+			if ( loc != MoveConditions.Safe)
+			{
+				location = loc switch
+				{
+					MoveConditions.CrashWithRover => _ui.SetRoverLocation(serial),
+					MoveConditions.DriveOffLedge => _ui.SetRoverLocation(serial),
+					_ => location
+				};
 			}
 
 			var rv = new MarsVehicle(location) {SerialNumber = serial, CurrentPosition = location};
