@@ -53,5 +53,85 @@ namespace NUnitTest
 			Assert.AreEqual(expected2.Y, actual2.Y);
 			Assert.AreEqual(expected2.Facing, actual2.Facing);
 		}
+
+		[Test]
+		public void RotateRight()
+		{
+			var map = new Map(5, 5);
+			var p2 = new Position { X = 3, Y = 3, Facing = Dir.East };
+			var rover2 = new MarsVehicle(p2);
+			const string movement2 = "R";
+
+			rover2.ApplyMovementCommands(movement2);
+			rover2.MoveRover(map);
+
+			var actual2 = rover2.CurrentPosition;
+			var expected2 = new Position { X = 3, Y = 3, Facing = Dir.South };
+
+			Assert.AreEqual(expected2.X, actual2.X);
+			Assert.AreEqual(expected2.Y, actual2.Y);
+			Assert.AreEqual(expected2.Facing, actual2.Facing);
+		}
+
+
+		[Test]
+		public void RotateLeft()
+		{
+			var map = new Map(5, 5);
+			var p2 = new Position { X = 3, Y = 3, Facing = Dir.East };
+			var rover2 = new MarsVehicle(p2);
+			const string movement2 = "l";
+
+			rover2.ApplyMovementCommands(movement2);
+			rover2.MoveRover(map);
+
+			var actual2 = rover2.CurrentPosition;
+			var expected2 = new Position { X = 3, Y = 3, Facing = Dir.North };
+
+			Assert.AreEqual(expected2.X, actual2.X);
+			Assert.AreEqual(expected2.Y, actual2.Y);
+			Assert.AreEqual(expected2.Facing, actual2.Facing);
+		}
+
+
+		[Test]
+		public void MoveForward()
+		{
+			var map = new Map(10, 10);
+			var p2 = new Position { X = 3, Y = 3, Facing = Dir.East };
+			var rover2 = new MarsVehicle(p2);
+			const string movement2 = "mmm";
+
+			rover2.ApplyMovementCommands(movement2);
+			rover2.MoveRover(map);
+
+			var actual2 = rover2.CurrentPosition;
+			var expected2 = new Position { X = 6, Y = 3, Facing = Dir.East };
+
+			Assert.AreEqual(expected2.X, actual2.X);
+			Assert.AreEqual(expected2.Y, actual2.Y);
+			Assert.AreEqual(expected2.Facing, actual2.Facing);
+		}
+
+		[Test]
+		public void MoveMakeAnL()
+		{
+			var map = new Map(10, 10);
+			var p2 = new Position { X = 3, Y = 3, Facing = Dir.East };
+			var rover2 = new MarsVehicle(p2);
+			const string movement2 = "mmmLmmm";
+
+			rover2.ApplyMovementCommands(movement2);
+			rover2.MoveRover(map);
+
+			var actual2 = rover2.CurrentPosition;
+			var expected2 = new Position { X = 6, Y = 6, Facing = Dir.North };
+
+			Assert.AreEqual(expected2.X, actual2.X);
+			Assert.AreEqual(expected2.Y, actual2.Y);
+			Assert.AreEqual(expected2.Facing, actual2.Facing);
+		}
+
+
 	}
 }
