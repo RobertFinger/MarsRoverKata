@@ -10,8 +10,6 @@ namespace MarsRoverSimulator.Rover
 		private readonly List<IRover> _objectsOnMap = new List<IRover>();
 		private readonly int _xLimit;
 		private readonly int _yLimit;
-		private bool _allowCollision;
-		private bool _allowDriveOffCliff;
 
 		public Map(int x, int y)
 		{
@@ -56,9 +54,7 @@ namespace MarsRoverSimulator.Rover
 
 			if (pos.X < 0 || pos.X > _xLimit || pos.Y < 0 || pos.Y > _yLimit)
 			{
-				if (_allowDriveOffCliff)
-					return MoveConditions.Safe;
-
+				
 				if (Ui.DriveOffCliff())
 				{
 					return MoveConditions.DriveOffLedge;
@@ -67,9 +63,6 @@ namespace MarsRoverSimulator.Rover
 
 			if (_objectsOnMap.Any(rover => rover.CurrentPosition.X == pos.X && rover.CurrentPosition.Y == pos.Y && rover.SerialNumber != serial))
 			{
-				if (_allowCollision)
-					return MoveConditions.Safe;
-
 				if (Ui.CrashIntoRover())
 				{
 					return MoveConditions.CrashWithRover;
@@ -80,15 +73,5 @@ namespace MarsRoverSimulator.Rover
 			return MoveConditions.Safe;
 		}
 
-		public void MuteCliffWarning(bool mute)
-		{
-			_allowDriveOffCliff = mute;
-		}
-
-
-		public void MuteCollisionWarning(bool mute)
-		{
-			_allowCollision = mute;
-		}
 	}
 }

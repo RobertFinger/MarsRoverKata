@@ -23,7 +23,7 @@ namespace MarsRoverSimulator
 			var m = _ui.GetMapSize();
 			var map = new Map(m.Item1, m.Item2);
 
-			var success = MoveConditions.NoResults;
+			MoveConditions success;
 
 			// if the rover hits something or drives off a ledge, redo it.
 			do
@@ -31,11 +31,6 @@ namespace MarsRoverSimulator
 				success = CommandRover(1, map);
 			} while (success != MoveConditions.Safe);
 
-
-			// the first rover may have muted these warnings, so lets unmute them. In production code we may prefer each rover to have it's on mute warnings settings, but that's a design call.
-			// I decided to let the map handle all environmental things like rovers colliding or driving off the edge. 
-			map.MuteCliffWarning(false);
-			map.MuteCollisionWarning(false);
 
 			do
 			{
