@@ -9,6 +9,7 @@ namespace NUnitTest
 		[SetUp]
 		public void Setup()
 		{
+			// I didn't do a lot of unit testing, but normally I would.  Most of this was coded while I was on an airplane flying from big sky to detroit.
 		}
 
 		[Test]
@@ -17,7 +18,7 @@ namespace NUnitTest
 			var map = new Map(5, 5);
 			var p = new Position {X = 1, Y = 2, Facing = Dir.North};
 			var rover = new MarsVehicle(p);
-			var movement = "LMLMLMLMM";
+			const string movement = "LMLMLMLMM";
 
 			rover.ApplyMovementCommands(movement);
 			rover.MoveRover(map);
@@ -39,7 +40,7 @@ namespace NUnitTest
 			var map = new Map(5, 5);
 			var p2 = new Position {X = 3, Y = 3, Facing = Dir.East};
 			var rover2 = new MarsVehicle(p2);
-			var movement2 = "MMRMMRMRRM";
+			const string movement2 = "MMRMMRMRRM";
 
 			rover2.ApplyMovementCommands(movement2);
 			rover2.MoveRover(map);
