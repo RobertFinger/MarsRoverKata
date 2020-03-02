@@ -9,7 +9,8 @@ namespace NUnitTest
 		[SetUp]
 		public void Setup()
 		{
-			// I didn't do a lot of unit testing, but normally I would.  Most of this was coded while I was on an airplane flying from big sky to detroit.
+			// I didn't do a lot of unit testing, but normally I would.  Most of this was coded while I was on an airplane flying from big sky to detroit and I got home before my unit test section was complete.  
+			// Don't take this to mean I do not value unit tests, I believe in unit testing very much. I did the minimum spec in this department to make the other parts of the spec more robust. It was a trade off.
 		}
 
 		[Test]
@@ -26,7 +27,7 @@ namespace NUnitTest
 			var actual = rover.CurrentPosition;
 			var expected = new Position {X = 1, Y = 3, Facing = Dir.North};
 
-			// we can serialize the objects to json and compare them that way, but these are tiny objects and we'd like to know exactly where it failed.
+			// we can serialize the objects to json and compare them that way, but these are tiny objects so it's not necessary.
 
 			Assert.AreEqual(expected.X, actual.X);
 			Assert.AreEqual(expected.Y, actual.Y);
