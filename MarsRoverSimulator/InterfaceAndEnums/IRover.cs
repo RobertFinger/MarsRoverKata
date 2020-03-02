@@ -9,6 +9,6 @@ namespace MarsRoverSimulator.InterfaceAndEnums
 		public Queue<Controls> Movement { get; set; }
 		public Position CurrentPosition { get; set; }
 		public void ApplyMovementCommands(string commands);
-		public bool MoveRover(IMap map);
+		public MoveConditions MoveRover(IMap map);
 	}
 }

@@ -4,7 +4,7 @@ namespace MarsRoverSimulator.InterfaceAndEnums
 {
 	public interface IMap
 	{
-		public bool IsLocationSafe(Position pos, int serial);
+		public MoveConditions IsLocationSafe(Position pos, int serial);
 		public void SetRoverPosition(IRover rover);
 	}
 }

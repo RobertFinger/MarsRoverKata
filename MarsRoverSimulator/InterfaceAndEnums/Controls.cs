@@ -1,6 +1,4 @@
-﻿using System.IO.MemoryMappedFiles;
-
-namespace MarsRoverSimulator.InterfaceAndEnums
+﻿namespace MarsRoverSimulator.InterfaceAndEnums
 {
 	public enum Controls
 	{

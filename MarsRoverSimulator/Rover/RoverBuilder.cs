@@ -14,7 +14,7 @@ namespace MarsRoverSimulator.Rover
 
 		public IRover AddRover(Position location, IMap map, int serial)
 		{
-			if (!map.IsLocationSafe(location, serial))
+			if ( map.IsLocationSafe(location, serial) != MoveConditions.Safe)
 			{
 				var resetDangerousLocation = _ui.CrashIntoRover();
 

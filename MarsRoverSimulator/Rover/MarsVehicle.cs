@@ -23,6 +23,7 @@ namespace MarsRoverSimulator.Rover
 			//the queue allows us to test each position of the movement for collision or driving off the edge.
 			//we could do all of the logic off of string manipulation, but that's pretty fragile.
 
+			Movement = new Queue<Controls>();
 			var com = commands.ToLower(CultureInfo.InvariantCulture).ToCharArray();
 
 			foreach (var c in com)
@@ -43,7 +44,7 @@ namespace MarsRoverSimulator.Rover
 		}
 
 
-		public bool MoveRover(IMap map)
+		public MoveConditions MoveRover(IMap map)
 		{
 			foreach (var move in Movement)
 				switch (move)
@@ -53,7 +54,6 @@ namespace MarsRoverSimulator.Rover
 							CurrentPosition.Facing += 90;
 						else
 							CurrentPosition.Facing = 0;
-
 						break;
 
 					case Controls.Left:
@@ -61,7 +61,6 @@ namespace MarsRoverSimulator.Rover
 							CurrentPosition.Facing -= 90;
 						else
 							CurrentPosition.Facing = (Dir) 270;
-
 						break;
 
 					case Controls.Forward:
@@ -69,21 +68,22 @@ namespace MarsRoverSimulator.Rover
 						{
 							case Dir.North:
 								CurrentPosition.Y++;
-								map.IsLocationSafe(CurrentPosition, SerialNumber);
 								break;
 							case Dir.South:
 								CurrentPosition.Y--;
-								map.IsLocationSafe(CurrentPosition, SerialNumber);
 								break;
 							case Dir.East:
 								CurrentPosition.X++;
-								map.IsLocationSafe(CurrentPosition, SerialNumber);
 								break;
 							case Dir.West:
 								CurrentPosition.X--;
-								map.IsLocationSafe(CurrentPosition, SerialNumber);
 								break;
 						}
+
+						// check to see if that last move was OK.  If not, reset the process.
+						var condition = map.IsLocationSafe(CurrentPosition, SerialNumber);
+						if (condition == MoveConditions.CrashWithRover || condition == MoveConditions.DriveOffLedge)
+							return condition;
 
 						break;
 
@@ -91,7 +91,7 @@ namespace MarsRoverSimulator.Rover
 						throw new ArgumentOutOfRangeException();
 				}
 
-			return true;
+			return map.IsLocationSafe(CurrentPosition, SerialNumber);
 		}
 	}
 }

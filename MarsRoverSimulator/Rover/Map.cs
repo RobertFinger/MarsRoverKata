@@ -25,17 +25,24 @@ namespace MarsRoverSimulator.Rover
 		private UI Ui { get; }
 
 		public void SetRoverPosition(IRover rover)
-		{
+		{		
+			// rather than reset the same rover's position we can just replace it.
+			// to do that we remove it if we find it here, then add it again.  In a more robust system we would
+			// prefer to update instead of replace since removing things from a list is expensive.
+			// for this exercise though, we're fine.
+
+
 			foreach (var vehicle in _objectsOnMap.Where(vehicle => rover.SerialNumber == vehicle.SerialNumber))
-				// rather than reset the same rover's position and risk missing a data point or something, we can just replace it.
-				// to do that we remove it if we find it here, then add it again.  In a more robust system we would prefer to update instead of replace since removing things from a list is expensive.
-				// we could mitigate that by using a linked list, but for two items it's a little silly to worry about that.
+			{
 				_objectsOnMap.Remove(vehicle);
+				break;
+			}
+				
 
 			_objectsOnMap.Add(rover);
 		}
 
-		public bool IsLocationSafe(Position pos, int serial)
+		public MoveConditions IsLocationSafe(Position pos, int serial)
 		{
 			//Since this is a simulator, they will want us to warn them if their planned route is safe.
 			//the two conditions we can test for is "did we drive off the cliff" and "did we crash into another rover"
@@ -45,35 +52,32 @@ namespace MarsRoverSimulator.Rover
 			// That's not part of the spec, but a beneficial side effect of how it's built.
 
 			if (pos == null)
-				return false;
+				return MoveConditions.DriveOffLedge;
 
 			if (pos.X < 0 || pos.X > _xLimit || pos.Y < 0 || pos.Y > _yLimit)
 			{
 				if (_allowDriveOffCliff)
-					return true;
+					return MoveConditions.Safe;
 
 				if (Ui.DriveOffCliff())
 				{
-					Ui.SetRoverLocation(serial);
-					MuteCliffWarning(Ui.PromptToMuteDriveOffCliff());
+					return MoveConditions.DriveOffLedge;
 				}
 			}
 
-			if (_objectsOnMap.Any(rover =>
-				rover.CurrentPosition.X == pos.X && rover.CurrentPosition.Y == pos.Y && rover.SerialNumber != serial))
+			if (_objectsOnMap.Any(rover => rover.CurrentPosition.X == pos.X && rover.CurrentPosition.Y == pos.Y && rover.SerialNumber != serial))
 			{
 				if (_allowCollision)
-					return true;
+					return MoveConditions.Safe;
 
 				if (Ui.CrashIntoRover())
 				{
-					Ui.SetRoverLocation(serial);
-					MuteCollisionWarning(Ui.PromptToMuteCrashIntoRover());
+					return MoveConditions.CrashWithRover;
 				}
 			}
 
 
-			return true;
+			return MoveConditions.Safe;
 		}
 
 		public void MuteCliffWarning(bool mute)

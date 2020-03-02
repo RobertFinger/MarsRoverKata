@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using MarsRoverSimulator.InterfaceAndEnums;
 using MarsRoverSimulator.Rover;
@@ -72,12 +73,20 @@ namespace MarsRoverSimulator.UserInterface
 				var s2 = int.TryParse(pos[1], out var y);
 				var s3 = GetDirFromChar(pos[2]);
 
+				if (!s1 || !s2 || s3 == Dir.Fail)
+				{
+					IO.SendTextToUser("Invalid parameters.  Please use this format (X Y Dir)");
+					SetRoverLocation(serial);
+				}
+
+				
 				rv.X = x;
 				rv.Y = y;
 				rv.Facing = s3;
 			}
 			catch (Exception e)
 			{
+				Console.WriteLine($" (This would be in a log file:  {e}, failed to set params");
 				// log the error here, but reprompt the user.  We would also have a counter here, to make sure it's not a never ending loop.  After 3 tries, throw and let the user know it's not working.
 				IO.SendTextToUser("Invalid parameters.  Please use this format (X Y Dir)");
 				SetRoverLocation(serial);
@@ -133,7 +142,7 @@ namespace MarsRoverSimulator.UserInterface
 		{
 			var response =
 				IO.GetUserResponse(
-					"There are no guard rails on Mars and this path will cause the rover to drive off a cliff.  Would you like to change this path?  (Y/N)");
+					"This path will cause you to crash into another rover.  It's a real pain to get AAA to come to mars for an insurance claim.  Would you like to change this path?  (Y/N)");
 
 			// In production code there are lots of variations of yes we should test here - Yno, would return true. That's ok, it's a kata :)
 			return response?.Contains("y", StringComparison.InvariantCultureIgnoreCase) ?? false;
