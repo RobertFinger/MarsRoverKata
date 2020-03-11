@@ -7,12 +7,20 @@ The purpose of this take-home assignment is to enable you to demonstrate your pr
 There are multiple approaches to get to a working solution, so feel free to make assumptions whenever you find something ambiguous.
 
 The reviewer will be interested in:
+
 •	Your overall approach to this exercise and how you came to your solution.  Please make sure to list your assumptions.
+
 •	Your ability to read and interpret the specification below.
+
 •	The architectural design and efficiency of your solution.
+
 •	The readability and supportability of your code.  
+
 •	Your use of Unit Tests written in a popular unit test framework like NUnit or MSTest.  At minimum, you should have tests proving that your solution works for the supplied sample input/output below.
+
 •	Professionalism of your code.  Your code should follow standard C# coding styles, be free of major defects and be appropriately commented.
+
+
 DELIVERABLES
 Your solution must be written in C#.  Create a .zip archive containing all your solution files; excluding binaries, we will build those here.  This assignment helps us better understand each candidate, plagiarism and cheating will not be tolerated and will result in immediate disqualification. As such, please make sure you Do NOT publish your solution to any public websites including github.
 SPECIFICATION
@@ -25,8 +33,11 @@ left corner and facing North.
 
 In order to control a rover, NASA sends a simple string of letters. The possible letters are:
 
+
 •	'L' – Make the rover spin 90 degrees left without moving from its current spot
+
 •	'R' - Make the rover spin 90 degrees right without moving from its current spot
+
 •	'M'. Move forward one grid point, and maintain the same heading.
 
 Assume that the square directly North from (x, y) is (x, y+1).
